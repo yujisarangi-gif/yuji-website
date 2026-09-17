@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Yuji Nakagawa | Sarangi Player</title>
+
+<style>
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    background: #f5f3ee;
+    color: #222;
+}
+
+nav {
+    text-align: center;
+    padding: 22px 10px;
+    border-bottom: 1px solid #aaa;
+}
+
+nav a {
+    text-decoration: none;
+    color: #222;
+    margin: 0 12px;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+.language {
+    text-align: right;
+    max-width: 900px;
+    margin: 15px auto 0;
+    padding: 0 25px;
+}
+
+.language button {
+    background: none;
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    font-size: 14px;
+    margin-left: 10px;
+}
+
+.hero {
+    text-align: center;
+    padding: 40px 20px 80px;
+}
+
+.hero h1 {
+    font-size: clamp(42px, 7vw, 75px);
+    font-weight: normal;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+}
+
+.hero h2 {
+    font-size: 17px;
+    font-weight: normal;
+    letter-spacing: 7px;
+    margin-bottom: 45px;
+}
+
+.hero img {
+    width: 100%;
+    max-width: 850px;
+    height: auto;
+    display: block;
+    margin: auto;
+    filter: grayscale(100%);
+}
+
+.hero p {
+    margin-top: 35px;
+    font-size: 18px;
+    font-style: italic;
+}
+
+section {
+    max-width: 850px;
+    margin: auto;
+    padding: 80px 25px;
+    border-top: 1px solid #aaa;
+}
+
+section h2 {
+    text-align: center;
+    font-weight: normal;
+    letter-spacing: 4px;
+    margin-bottom: 40px;
+}
+
+section p {
+    line-height: 2;
+}
+
+.jp {
+    display: none;
+    font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+}
+
+footer {
+    border-top: 1px solid #aaa;
+    text-align: center;
+    padding: 40px;
+    font-size: 13px;
+}
+
+@media (max-width: 700px) {
+    nav a {
+        display: inline-block;
+        margin: 5px 7px;
+        font-size: 11px;
+    }
+
+    .hero {
+        padding-top: 25px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="language">
+    <button onclick="english()">English</button>
+    |
+    <button onclick="japanese()">日本語</button>
+</div>
+
+<nav>
+<a href="#home">HOME</a>
+<a href="#profile">PROFILE</a>
+<a href="#concerts">CONCERTS</a>
+<a href="#music">MUSIC</a>
+<a href="#lessons">LESSONS</a>
+<a href="#contact">CONTACT</a>
+</nav>
+
+<div class="hero" id="home">
+
+<h1>YUJI NAKAGAWA</h1>
+<h2>SARANGI PLAYER</h2>
+
+<img src="yuji.jpg" alt="Yuji Nakagawa performing sarangi">
+
+<p class="en">Hindustani Classical Music</p>
+<p class="jp">北インド古典音楽</p>
+
+</div>
+
+
+<section id="profile">
+
+<h2>PROFILE</h2>
+
+<div class="en">
+
+<p>
+Yuji Nakagawa is a Japanese sarangi player specializing
+in Hindustani classical music.
+</p>
+
+<p>
+He began studying sarangi in Varanasi in 2003 under
+Ustad Faiyaz Ali Khan. In 2005, he moved to Mumbai and
+became a disciple of the late Pt. Dhruba Ghosh.
+From 2009 to 2015, he studied at Bharatiya Vidya Bhavan
+in Mumbai as an ICCR scholarship recipient.
+</p>
+
+<p>
+Since 2009, he has performed professionally in India,
+Japan and internationally, presenting sarangi solo
+recitals as well as collaborating with vocalists,
+tabla players, ensembles and orchestras.
+</p>
+
+</div>
+
+<div class="jp">
+
+<p>
+ナカガワ ユウジは、北インド古典音楽を専門とする
+日本人サーランギー奏者です。
+</p>
+
+<p>
+2003年、インド・ヴァラナシにて
+ウスタッド・ファイヤーズ・アリー・カーン氏より
+サーランギーを学ぶ。
+2005年よりムンバイにて故Pt.ドゥルバ・ゴーシュ氏に師事。
+2009年から2015年までICCR奨学生として
+ムンバイのBharatiya Vidya Bhavanにて研鑽を積む。
+</p>
+
+<p>
+2009年よりプロの演奏家として活動を開始。
+インド、日本をはじめ国内外でサーランギー独奏、
+声楽・タブラとの共演、アンサンブルや
+オーケストラとの演奏活動を行っている。
+</p>
+
+</div>
+
+</section>
+
+
+<section id="concerts">
+
+<h2>CONCERTS</h2>
+
+<p class="en">Upcoming concerts and performance information.</p>
+
+<p class="jp">
+今後のコンサート・演奏会情報を掲載します。
+</p>
+
+</section>
+
+
+<section id="music">
+
+<h2>MUSIC & VIDEO</h2>
+
+<p class="en">
+Sarangi performances, recordings and videos.
+</p>
+
+<p class="jp">
+サーランギーの演奏・録音・映像をご紹介します。
+</p>
+
+</section>
+
+
+<section id="lessons">
+
+<h2>LESSONS</h2>
+
+<p class="en">
+Sarangi and Hindustani classical music lessons.
+</p>
+
+<p class="jp">
+サーランギーおよび北インド古典音楽のレッスン。
+</p>
+
+</section>
+
+
+<section id="contact">
+
+<h2>CONTACT</h2>
+
+<p class="en">
+Concert bookings, collaborations and lesson inquiries.
+</p>
+
+<p class="jp">
+演奏依頼、共演、レッスンなどのお問い合わせ。
+</p>
+
+</section>
+
+
+<footer>
+© 2026 Yuji Nakagawa
+</footer>
+
+
+<script>
+
+function english() {
+
+    document.querySelectorAll(".en").forEach(function(el) {
+        el.style.display = "block";
+    });
+
+    document.querySelectorAll(".jp").forEach(function(el) {
+        el.style.display = "none";
+    });
+
+    document.documentElement.lang = "en";
+}
+
+
+function japanese() {
+
+    document.querySelectorAll(".en").forEach(function(el) {
+        el.style.display = "none";
+    });
+
+    document.querySelectorAll(".jp").forEach(function(el) {
+        el.style.display = "block";
+    });
+
+    document.documentElement.lang = "ja";
+}
+
+</script>
+
+</body>
+</html>
