@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -108,6 +107,42 @@ section p {
     font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
 }
 
+/* CONCERTS */
+
+.concert-card {
+    padding: 35px 0;
+    border-bottom: 1px solid #aaa;
+}
+
+.concert-date {
+    font-size: 14px;
+    letter-spacing: 3px;
+    margin-bottom: 12px;
+}
+
+.concert-title {
+    font-size: 25px;
+    font-weight: normal;
+    margin: 0 0 18px;
+}
+
+.concert-info {
+    line-height: 2;
+}
+
+.concert-description {
+    margin-top: 15px;
+}
+
+.concert-link {
+    display: inline-block;
+    margin-top: 10px;
+    color: #222;
+    text-decoration: none;
+    border-bottom: 1px solid #222;
+    letter-spacing: 1px;
+}
+
 footer {
     border-top: 1px solid #aaa;
     text-align: center;
@@ -116,6 +151,7 @@ footer {
 }
 
 @media (max-width: 700px) {
+
     nav a {
         display: inline-block;
         margin: 5px 7px;
@@ -124,6 +160,10 @@ footer {
 
     .hero {
         padding-top: 25px;
+    }
+
+    .concert-title {
+        font-size: 21px;
     }
 }
 
@@ -146,6 +186,7 @@ footer {
 <a href="#lessons">LESSONS</a>
 <a href="#contact">CONTACT</a>
 </nav>
+
 
 <div class="hero" id="home">
 
@@ -244,7 +285,6 @@ received awards and scholarships for his music.
 
 </div>
 
-
 </section>
 
 
@@ -252,11 +292,17 @@ received awards and scholarships for his music.
 
 <h2>CONCERTS</h2>
 
-<p class="en">Upcoming concerts and performance information.</p>
+<div class="en">
+    <div id="concerts-en">
+        <p>Loading concert information...</p>
+    </div>
+</div>
 
-<p class="jp">
-今後のコンサート・演奏会情報を掲載します。
-</p>
+<div class="jp">
+    <div id="concerts-jp">
+        <p>公演情報を読み込んでいます...</p>
+    </div>
+</div>
 
 </section>
 
@@ -313,6 +359,10 @@ Concert bookings, collaborations and lesson inquiries.
 
 <script>
 
+const concertAPI =
+"https://script.google.com/macros/s/AKfycbwbhFC1aXub24Kz0rO72TIzmD9d5RS62sspN6jVMLVG0Wf8ApLLbmqC4PBoIznxxMQBaA/exec";
+
+
 function english() {
 
     document.querySelectorAll(".en").forEach(function(el) {
@@ -339,6 +389,321 @@ function japanese() {
 
     document.documentElement.lang = "ja";
 }
+
+
+function parseConcertDate(dateString) {
+
+    if (!dateString) return null;
+
+    const parts = dateString.split("/");
+
+    if (parts.length !== 3) return null;
+
+    const day = Number(parts[0]);
+    const month = Number(parts[1]);
+    const year = Number(parts[2]);
+
+    if (!day || !month || !year) return null;
+
+    return new Date(year, month - 1, day);
+}
+
+
+function formatConcertDate(dateString) {
+
+    const date = parseConcertDate(dateString);
+
+    if (!date) return dateString;
+
+    const months = [
+        "JAN", "FEB", "MAR", "APR",
+        "MAY", "JUN", "JUL", "AUG",
+        "SEP", "OCT", "NOV", "DEC"
+    ];
+
+    return date.getDate() + " " +
+           months[date.getMonth()] + " " +
+           date.getFullYear();
+}
+
+
+function formatTime(timeString) {
+
+    if (!timeString) return "";
+
+    return timeString.substring(0, 5);
+}
+
+
+function addInfo(parent, label, value) {
+
+    if (!value) return;
+
+    const line = document.createElement("div");
+
+    const strong = document.createElement("strong");
+    strong.textContent = label;
+
+    line.appendChild(strong);
+    line.appendChild(
+        document.createTextNode(" — " + value)
+    );
+
+    parent.appendChild(line);
+}
+
+
+function createConcertCard(concert, language) {
+
+    const card = document.createElement("article");
+    card.className = "concert-card";
+
+
+    const date = document.createElement("div");
+    date.className = "concert-date";
+    date.textContent = formatConcertDate(concert.date);
+    card.appendChild(date);
+
+
+    const title = document.createElement("h3");
+    title.className = "concert-title";
+
+    if (language === "jp") {
+        title.textContent =
+            concert.titleJP || concert.titleEN || "";
+    } else {
+        title.textContent =
+            concert.titleEN || concert.titleJP || "";
+    }
+
+    card.appendChild(title);
+
+
+    const info = document.createElement("div");
+    info.className = "concert-info";
+
+
+    if (language === "jp") {
+
+        addInfo(
+            info,
+            "会場",
+            concert.venueJP || concert.venueEN
+        );
+
+        addInfo(
+            info,
+            "開催地",
+            concert.locationJP || concert.locationEN
+        );
+
+        addInfo(
+            info,
+            "開演",
+            formatTime(concert.time)
+        );
+
+        addInfo(
+            info,
+            "料金",
+            concert.feeJP || concert.feeEN
+        );
+
+    } else {
+
+        addInfo(
+            info,
+            "Venue",
+            concert.venueEN || concert.venueJP
+        );
+
+        addInfo(
+            info,
+            "Location",
+            concert.locationEN || concert.locationJP
+        );
+
+        addInfo(
+            info,
+            "Start",
+            formatTime(concert.time)
+        );
+
+        addInfo(
+            info,
+            "Fee",
+            concert.feeEN || concert.feeJP
+        );
+    }
+
+    card.appendChild(info);
+
+
+    const description =
+        language === "jp"
+        ? concert.descriptionJP
+        : (concert.descriptionEN || concert.descriptionJP);
+
+
+    if (description) {
+
+        const p = document.createElement("p");
+        p.className = "concert-description";
+        p.textContent = description;
+
+        card.appendChild(p);
+    }
+
+
+    if (concert.reservation) {
+
+        const p = document.createElement("p");
+        const link = document.createElement("a");
+
+        link.className = "concert-link";
+
+        let validLink = false;
+
+
+        if (
+            concert.reservation.includes("@") &&
+            !concert.reservation.startsWith("http")
+        ) {
+
+            link.href = "mailto:" + concert.reservation;
+            validLink = true;
+
+        } else {
+
+            try {
+
+                const url = new URL(concert.reservation);
+
+                if (
+                    url.protocol === "http:" ||
+                    url.protocol === "https:"
+                ) {
+
+                    link.href = url.href;
+                    link.target = "_blank";
+                    link.rel = "noopener noreferrer";
+                    validLink = true;
+                }
+
+            } catch (error) {
+                validLink = false;
+            }
+        }
+
+
+        if (validLink) {
+
+            link.textContent =
+                language === "jp"
+                ? "予約・お問い合わせ →"
+                : "RESERVATION / CONTACT →";
+
+            p.appendChild(link);
+            card.appendChild(p);
+        }
+    }
+
+
+    return card;
+}
+
+
+fetch(concertAPI)
+
+.then(function(response) {
+
+    if (!response.ok) {
+        throw new Error("Concert API error");
+    }
+
+    return response.json();
+})
+
+.then(function(concerts) {
+
+    const englishContainer =
+        document.getElementById("concerts-en");
+
+    const japaneseContainer =
+        document.getElementById("concerts-jp");
+
+
+    englishContainer.replaceChildren();
+    japaneseContainer.replaceChildren();
+
+
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+
+    const upcoming = concerts
+        .filter(function(concert) {
+
+            const date = parseConcertDate(concert.date);
+
+            return date && date >= today;
+        })
+
+        .sort(function(a, b) {
+
+            return (
+                parseConcertDate(a.date) -
+                parseConcertDate(b.date)
+            );
+        });
+
+
+    if (upcoming.length === 0) {
+
+        const enMessage = document.createElement("p");
+        enMessage.textContent =
+            "No upcoming concerts at the moment.";
+
+        const jpMessage = document.createElement("p");
+        jpMessage.textContent =
+            "現在予定されている公演はありません。";
+
+        englishContainer.appendChild(enMessage);
+        japaneseContainer.appendChild(jpMessage);
+
+        return;
+    }
+
+
+    upcoming.forEach(function(concert) {
+
+        englishContainer.appendChild(
+            createConcertCard(concert, "en")
+        );
+
+        japaneseContainer.appendChild(
+            createConcertCard(concert, "jp")
+        );
+    });
+
+})
+
+.catch(function(error) {
+
+    console.error(error);
+
+    const englishContainer =
+        document.getElementById("concerts-en");
+
+    const japaneseContainer =
+        document.getElementById("concerts-jp");
+
+    englishContainer.textContent =
+        "Concert information is temporarily unavailable.";
+
+    japaneseContainer.textContent =
+        "現在、公演情報を取得できません。";
+});
 
 </script>
 
